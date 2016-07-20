@@ -6,7 +6,11 @@ def shape(vector):
     number of rows (for a vector) or the number of rows and columns
     (for a matrix.)"""
     rows = len(vector)
-    return (rows,)
+    if isinstance(vector[0], list):
+        cols = len(vector[0])
+        return (rows, cols)
+    else:
+        return (rows,)
 
 def vector_add(vector_a, vector_b):
     """
@@ -52,30 +56,39 @@ def vector_multiply(vector, number):
 def vector_mean(vector_a, vector_b):
     return [(val_a + val_b) / 2 for val_a, val_b in zip(vector_a, vector_b)]
 
-    """
-    mean([a b], [c d]) = [mean(a, c) mean(b, d)]
-    mean(Vector)       = Vector
-
-    assert vector_mean(m, n) == [4, 2]
-    assert vector_mean(v, w) == [0.5, 2.5, 2]
-    assert are_equal(vector_mean(v, w, u)[0], 2 / 3)
-    assert are_equal(vector_mean(v, w, u)[1], 2)
-    assert are_equal(vector_mean(v, w, u)[2], 5 / 3)
-    """
-
 def magnitude(vector):
     return sum([val ** 2 for val in vector]) ** 0.5
 
-    """
-    magnitude([a b])  = sqrt(a^2 + b^2)
-    magnitude(Vector) = Scalar
+def matrix_row(matrix, row):
+    return matrix[row]
+
+def matrix_col(matrix, row):
+    return [vector[row] for vector in matrix]
+
+def matrix_add(matrix_a, matrix_b):
+    if shape(matrix_a) == shape(matrix_b):
+        return [vector_add(vector_a, vector_b) for vector_a, vector_b in zip(matrix_a, matrix_b)]
+    else:
+        raise ShapeError("Matrices must be the same size")
+
+def matrix_sub(matrix_a, matrix_b):
+    if shape(matrix_a) == shape(matrix_b):
+        return [vector_sub(vector_a, vector_b) for vector_a, vector_b in zip(matrix_a, matrix_b)]
+    else:
+        raise ShapeError("Matrices must be the same size")
 
 
-    assert magnitude(m) == 5
-    assert magnitude(v) == math.sqrt(10)
-    assert magnitude(y) == math.sqrt(1400)
-    assert magnitude(z) == 0
-    """
+A = [[1, 0, 0],
+     [0, 1, 0],
+     [0, 0, 1]]
+B = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+C = [[1, 2],
+     [2, 1],
+     [1, 2]]
+D = [[1, 2, 3],
+     [3, 2, 1]]
 
 m = [3, 4]
 n = [5, 0]
