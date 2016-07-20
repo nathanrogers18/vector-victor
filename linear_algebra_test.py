@@ -105,6 +105,7 @@ def test_vector_mean():
     mean([a b], [c d]) = [mean(a, c) mean(b, d)]
     mean(Vector)       = Vector
     """
+
     assert vector_mean(m, n) == [4, 2]
     assert vector_mean(v, w) == [0.5, 2.5, 2]
     assert are_equal(vector_mean(v, w, u)[0], 2 / 3)
@@ -198,21 +199,21 @@ def test_matrix_sub_checks_shapes():
     matrix_sub(C, D)
 
 
-# def test_matrix_scalar_multiply():
-#     """
-#     [[a b]   *  Z   =   [[a*Z b*Z]
-#      [c d]]              [c*Z d*Z]]
-#
-#     Matrix * Scalar = Matrix
-#     """
-#     assert matrix_scalar_multiply(C, 3) == [[3, 6],
-#                                             [6, 3],
-#                                             [3, 6]]
-#     assert matrix_scalar_multiply(B, 2) == [[ 2,  4,  6],
-#                                             [ 8, 10, 12],
-#                                             [14, 16, 18]]
-#
-#
+def test_matrix_scalar_multiply():
+    """
+    [[a b]   *  Z   =   [[a*Z b*Z]
+     [c d]]              [c*Z d*Z]]
+
+    Matrix * Scalar = Matrix
+    """
+    assert matrix_scalar_multiply(C, 3) == [[3, 6],
+                                            [6, 3],
+                                            [3, 6]]
+    assert matrix_scalar_multiply(B, 2) == [[ 2,  4,  6],
+                                            [ 8, 10, 12],
+                                            [14, 16, 18]]
+
+
 # def test_matrix_vector_multiply():
 #     """
 #     [[a b]   *  [x   =   [a*x+b*y
@@ -232,8 +233,8 @@ def test_matrix_sub_checks_shapes():
 #     """Shape Rule: The number of rows of the vector must equal the number of
 #     columns of the matrix."""
 #     matrix_vector_multiply(C, [1, 2, 3])
-#
-#
+
+
 # def test_matrix_matrix_multiply():
 #     """
 #     [[a b]   *  [[w x]   =   [[a*w+b*y a*x+b*z]
