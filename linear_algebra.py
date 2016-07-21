@@ -82,19 +82,27 @@ def matrix_scalar_multiply(matrix, number):
     return [vector_multiply(vector, number) for vector in matrix]
 
 def matrix_vector_multiply(matrix, vector):
-    pass
-    """
-    [[a b]   *  [x   =   [a*x+b*y
-     [c d]       y]       c*x+d*y
-     [e f]                e*x+f*y]
+    """Shape Rule: The number of rows of the vector must equal the number of
+    columns of the matrix."""
+    if shape(matrix)[1] == shape(vector)[0]:
+        for row in matrix:
+            for i in range(len(row)):
+                row[i] *= vector[i]
+        return [sum(vec) for vec in matrix]
+    else:
+        raise ShapeError("The number of rows of the vector must equal the number of columns of the matrix")
 
-    Matrix * Vector = Vector
-    """
-    assert matrix_vector_multiply(A, [2, 5, 4]) == [2, 5, 4]
-    assert matrix_vector_multiply(B, [1, 2, 3]) == [14, 32, 50]
-    assert matrix_vector_multiply(C, [3, 4]) == [11, 10, 11]
-    assert matrix_vector_multiply(D, [0, 1, 2]) == [8, 4]
 
+def matrix_matrix_multiply(x, y):
+    """I gave up on this one and tried using an answer online....http://www.programiz.com/python-programming/examples/multiply-matrix
+       But this doesn't seem to pass the test anyway :(
+    """
+    if shape(x)[1] == shape(y)[0]:
+        result = [[sum(a*b for a,b in zip(X_row,Y_col)) for Y_col in zip(*y)] for X_row in x]
+        print(result)
+        return result
+    else:
+        raise ShapeError("The number of columns of the first matrix must equal the number of rows of the second matrix")
 
 
 A = [[1, 0, 0],
@@ -118,7 +126,8 @@ u = [1, 1, 1]
 y = [10, 20, 30]
 z = [0, 0, 0]
 
-
+def compare_shapes(*args):
+    return len(set([shape(item) for item in args])) == 1
 
 
 def main():
